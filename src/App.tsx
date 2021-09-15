@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import "./App.css";
 
 function boundRandom(min: number, max: number) {
@@ -6,6 +6,7 @@ function boundRandom(min: number, max: number) {
 }
 
 function App() {
+  const [, rerender] = useState(0);
   return (
     <div className="App">
       <svg
@@ -85,6 +86,9 @@ function App() {
           <SecondWave />
         </g>
       </svg>
+      <button onClick={() => rerender((x) => x + 1)} className="hud">
+        Regenerate
+      </button>
     </div>
   );
 }
