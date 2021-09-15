@@ -13,6 +13,10 @@ const colors = [
 
 const lightColors = ["#1DF5F5", "#F5511D"];
 
+function boundRandom(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
+
 function App() {
   const [, rerender] = useState(0);
   return (
@@ -26,17 +30,18 @@ function App() {
         <defs>
           <linearGradient
             id="background-gradient"
-            x1="0.15"
-            x2="0.98"
-            y1="1.05"
-            y2="-0.3"
+            x1={boundRandom(0, 100)}
+            x2={boundRandom(0, 100)}
+            y1="-5"
+            y2="105"
+            gradientUnits="userSpaceOnUse"
           >
             <RandomGradient />
           </linearGradient>
           <linearGradient
             id="first-gradient"
-            x1="40"
-            x2="60"
+            x1={boundRandom(20, 80)}
+            x2={boundRandom(20, 80)}
             y1="0"
             y2="100"
             gradientUnits="userSpaceOnUse"
@@ -103,10 +108,6 @@ function App() {
   );
 }
 
-function boundRandom(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
 function smoothPoint(p: number[], previousPoint: number[]) {
   return `${p[0] - (p[0] - previousPoint[0]) / 2} ${p[1]} ${p.join(" ")}`;
 }
@@ -115,15 +116,15 @@ function FirstWave() {
   const firstPoint = [-10, boundRandom(15, 30)];
   const secondPoint = [boundRandom(0, 15), boundRandom(5, firstPoint[1] - 5)];
   const thirdPoint = [
-    boundRandom(Math.max(secondPoint[0], 25), 35),
+    boundRandom(Math.min(secondPoint[0] + 10, 25), 35),
     boundRandom(secondPoint[1] + 10, 45),
   ];
   const fourthPoint = [
-    boundRandom(Math.max(thirdPoint[0], 45), 55),
+    boundRandom(Math.min(thirdPoint[0] + 10, 45), 55),
     boundRandom(15, thirdPoint[1]),
   ];
   const fifthPoint = [
-    boundRandom(Math.max(fourthPoint[0], 65), 80),
+    boundRandom(Math.min(fourthPoint[0] + 10, 65), 80),
     boundRandom(fourthPoint[1], 45),
   ];
   const sixthPoint = [110, boundRandom(0, Math.max(fifthPoint[1], 10))];
