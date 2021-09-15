@@ -1,9 +1,17 @@
 import { useState } from "react";
 import "./App.css";
 
-function boundRandom(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
+const colors = [
+  "#D033DE",
+  "#EB5772",
+  "#8000FF",
+  "#00FFD1",
+  "#6C57EB",
+  "#33D4DE",
+  "#7340C7",
+];
+
+const lightColors = ["#1DF5F5", "#F5511D"];
 
 function App() {
   const [, rerender] = useState(0);
@@ -23,8 +31,7 @@ function App() {
             y1="1.05"
             y2="-0.3"
           >
-            <stop offset="0%" stop-color="#D033DE" />
-            <stop offset="100%" stop-color="#EB5772" />
+            <RandomGradient />
           </linearGradient>
           <linearGradient
             id="first-gradient"
@@ -34,8 +41,7 @@ function App() {
             y2="100"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stop-color="#8000FF" />
-            <stop offset="100%" stop-color="#00FFD1" />
+            <RandomGradient />
           </linearGradient>
           <linearGradient
             id="second-gradient"
@@ -44,7 +50,12 @@ function App() {
             y1="0"
             y2="1"
           >
-            <stop offset="0%" stop-color="#F5511D" />
+            <stop
+              offset="0%"
+              stop-color={
+                lightColors[Math.floor(Math.random() * lightColors.length)]
+              }
+            />
             <stop offset="100%" stop-color="#FFFFFF" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="third-gradient" x1="0.50" x2="0.50" y1="0" y2="1">
@@ -53,7 +64,6 @@ function App() {
           </linearGradient>
         </defs>
         <rect
-          id="rect1"
           x="0"
           y="0"
           width="100"
@@ -62,7 +72,7 @@ function App() {
         />
 
         <g
-          opacity="1"
+          opacity="0.95"
           style={{ filter: `drop-shadow( 0px -20px 20px rgba(0, 0, 0, .08))` }}
         >
           <FirstWave />
@@ -91,6 +101,10 @@ function App() {
       </button>
     </div>
   );
+}
+
+function boundRandom(min: number, max: number) {
+  return Math.random() * (max - min) + min;
 }
 
 function smoothPoint(p: number[], previousPoint: number[]) {
@@ -187,6 +201,19 @@ function ThirdWave() {
       )} S ${smoothPoint(fourthPoint, thirdPoint)} L 110 110 L -10 110 Z`}
       fill="url(#third-gradient)"
     />
+  );
+}
+
+function RandomGradient() {
+  const firstColor = colors[Math.floor(Math.random() * colors.length)];
+  const secondColor = colors.filter((x) => x !== firstColor)[
+    Math.floor(Math.random() * (colors.length - 1))
+  ];
+  return (
+    <>
+      <stop offset="0%" stop-color={firstColor} />
+      <stop offset="100%" stop-color={secondColor} />
+    </>
   );
 }
 
